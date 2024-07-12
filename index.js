@@ -21,7 +21,9 @@ app.use(
 );
 
 mongoose.set("strictQuery", true);
-mongoose.connect("mongodb://127.0.0.1:27017/signup");
+mongoose.connect(
+  "mongodb+srv://FlavorhuB:Food@cluster0.sv2n0lt.mongodb.net/signup"
+);
 
 app.post("/register", async (req, res) => {
   const { username, email, password } = req.body;
