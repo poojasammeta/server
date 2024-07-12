@@ -8,7 +8,13 @@ const userRoute = require("./controller/userRoute");
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: ["client-deployment-gamma.vercel.app"],
+    methods: ["POST", "GET"],
+    credentials: true,
+  })
+);
 
 app.use("/userRoute", userRoute);
 
