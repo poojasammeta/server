@@ -4,10 +4,13 @@ const cors = require("cors");
 const userModel = require("./model/user");
 const bcrypt = require("bcrypt");
 const session = require("express-session");
+const userRoute = require("./controller/userRoute");
 
 const app = express();
 app.use(express.json());
 app.use(cors());
+
+app.use("/userRoute", userRoute);
 
 app.use(
   session({
@@ -76,6 +79,8 @@ app.get("/logout", (req, res) => {
     }
   });
 });
+
+app.use("/userRoute", userRoute);
 
 app.listen(4000, () => {
   console.log("server started at 4000");
