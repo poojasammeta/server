@@ -16,6 +16,18 @@ app.use(
   })
 );
 
+app.use("/userRoute", userRoute);
+
+app.get("/userRouter", async (req, res) => {
+  try {
+    const users = await userModel.find().exec();
+    res.json(users);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Error retrieving data" });
+  }
+});
+
 app.use(
   session({
     secret: "Emulsify",
@@ -85,18 +97,6 @@ app.get("/logout", (req, res) => {
     }
   });
 });
-
-app.get("/userRouter", async (req, res) => {
-  try {
-    const users = await userModel.find().exec();
-    res.json(users);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Error retrieving data" });
-  }
-});
-
-app.use("/userRoute", userRoute);
 
 app.listen(4000, () => {
   console.log("server started at 4000");
