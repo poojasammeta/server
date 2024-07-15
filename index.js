@@ -1,32 +1,20 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const cors = require("cors");
 const userModel = require("./model/user");
 const bcrypt = require("bcrypt");
 const session = require("express-session");
 const userRoute = require("./controller/userRoute");
+const bodyParser = require("body-parser");
+const cors = require("cors");
 
 const app = express();
 app.use(express.json());
-app.use(
-  cors({
-    origin: ["client-deployment-gamma.vercel.app"],
-    methods: ["POST", "GET"],
-    credentials: true,
-  })
-);
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
 
 app.use("/userRoute", userRoute);
-
-app.get("/userRouter", async (req, res) => {
-  try {
-    const users = await userModel.find().exec();
-    res.json(users);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Error retrieving data" });
-  }
-});
 
 app.use(
   session({
